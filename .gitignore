@@ -1,0 +1,2 @@
+# node_modules全体を除外する（推奨）
+node_modules/
