@@ -1,2 +1,6 @@
 # node_modules全体を除外する（推奨）
 node_modules/
+npm-debug.log
+.DS_Store
+.env
+*.tgz
