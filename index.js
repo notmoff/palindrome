@@ -1,3 +1,5 @@
+module.exports = Phrase;
+
 // Stringにreverse()メソッドを追加
 String.prototype.reverse = function() {
   return Array.from(this).reverse().join("");
@@ -14,36 +16,30 @@ Array.prototype.last = function() {
   return this[this.length - 1];
 }
 
-// 文字列を逆順にして返す
-function reverse(str) {
-  return Array.from(str).reverse().join("");
-}
-
-// 回文ならtrueを、違うならfalseを返す
-function palindrome(str) {
-  let processedContent = str.toLowerCase();
-  return processedContent === reverse(processedContent);
-}
-
-// e-mailのユーザー名とドメイン名を要素として持つ配列を返す
-function emailParts(email) {
-  return email.toLowerCase().split("@")
-}
 
 // Phraseオブジェクトを定義する
 function Phrase(content) {
   this.content = content;
 
-  this.processor = (string) => {
+  // 文字列を全て小文字に変換
+  this.processor = function(string) {
     return string.toLowerCase();
   }
 
-  this.processedContent = function processedContent() {
-    return this.processor(this.content);
+  // コンテンツの文字だけを返す
+  this.letters = function letters() {
+    const letterRegex = /^[a-z]$/i;
+    return Array.from(this.content).filter(c => letterRegex.test(c)).join("");
   }
 
+  // プロセスを終えたフレーズを返す
+  this.processedContent = function processedContent() {
+    return this.processor(this.letters());
+  }
+
+  // フレーズがパリンドロームならtrueを、違うならfalseを返す
   this.palindrome = function palindrome() {
-    return this.processedContent() === reverse(this.processedContent());
+    return this.processedContent() === this.processedContent().reverse();
   }
 
   this.louder = function louder() {
@@ -51,26 +47,5 @@ function Phrase(content) {
   }
 }
 
-// function TranslatedPhrase(content, translation) {
-//   this.content = content;
-//   this.translation = translation;
-
-//   this.processedContent = function processedContent(){
-//     return this.processor(this.translation);
-//   }
-// }
-
-// // Phraseオブジェクトを継承
-// TranslatedPhrase.prototype = new Phrase();
-
-// let car = new Phrase("Racecar");
-// console.log(car.content);
-// console.log(car.palindrome());
-// console.log(car.louder());
-
-let str = " a";
-let ary = [0, 1, 2, 3, 4, 9];
-
-console.log(str.reverse());
-console.log(str.blank());
-console.log(ary.last());
+// let frase = new Phrase("Madam, I'm Adam.");
+// console.log(frase.letters());
